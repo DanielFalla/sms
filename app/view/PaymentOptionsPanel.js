@@ -14,30 +14,33 @@ Ext.define('sms.view.PaymentOptionsPanel',{
 		},{
 			items:[{
 				xtype: 'fieldset',
+				id:'fieldset',
 				title: 'Please select an option',
 				defaults:{
 					xtype:'radiofield',
-					labelWidth:'50%'
+					labelWidth:'80%'
 				},
 				items:[
 				    {
+				    	id: 'full',
 				    	name: 'payment',
 				    	value: 'full',
-				    	label: 'Full payment',
 				    },{
+				    	id: 'min',
 				    	name:'payment',
 				    	value:'min',
-				    	label: 'Minimum payment',
 				    },{
-				    	xtype: 'textfield',
+				    	id: 'otherAmount',
+				    	xtype: 'numberfield',
 				    	label: 'Other amount',
+				    	labelWidth:'80',
 				    	name:'otherAmount',
-				    	placeHolder: 'USD',
-				    	align:'right'
+				    	minValue: 0,
 				    },{
+				    	id: 'agent',
 				    	name:'payment',
 				    	value:'agent',
-				    	label: 'Talk to agent',
+				    	label: 'Talk to an agent',
 				    }
 		        ]
 			},{
