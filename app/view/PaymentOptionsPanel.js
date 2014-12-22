@@ -3,9 +3,16 @@ Ext.define('sms.view.PaymentOptionsPanel',{
 	model:'sms.model.PaymentOptions',
 	alias:'widget.paymentoptions',
 	id:'paymentoptions',
+	requires: [
+	           'Ext.TitleBar',
+	           'Ext.form.FieldSet',
+	           'Ext.field.Radio',
+	           'Ext.field.Number'
+	       ],
 	paymentOptions:undefined,
 	config:{
 		fullscreen:true,
+		layout:'fit',
 		items:[{
 			docked:'top',
 			xtype: 'titlebar',
@@ -15,7 +22,6 @@ Ext.define('sms.view.PaymentOptionsPanel',{
 			items:[{
 				xtype: 'fieldset',
 				id:'fieldset',
-				title: 'Please select an option',
 				defaults:{
 					xtype:'radiofield',
 					labelWidth:'80%'
@@ -43,11 +49,12 @@ Ext.define('sms.view.PaymentOptionsPanel',{
 				    	label: 'Talk to an agent',
 				    }
 		        ]
-			},{
-	        	xtype: 'button',
-	        	text: 'Send',
-	        	name: 'sendPaymentOptionButton',
-	        }]
-		}]
+			}]
+		},{
+        	xtype: 'button',
+        	docked:'bottom',
+        	text: 'Send',
+        	name: 'sendPaymentOptionButton',
+        }]
 	}
 });

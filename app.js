@@ -14,7 +14,7 @@ Ext.application({
     name: 'sms',
 
     requires: [
-        'Ext.MessageBox'
+        'Ext.MessageBox','sms.view.MainTabPanel','sms.model.PaymentOptions'
     ],
 
     views: [
@@ -24,6 +24,10 @@ Ext.application({
     
     controllers:[
          'sms.controller.SMSController'
+    ],
+    
+    stores:[
+         'sms.store.UserStore'
     ],
 
     icon: {
@@ -45,7 +49,9 @@ Ext.application({
     },
 
     launch: function() {
-    	debugger;
+//    	if( Ext.os.is.Android ) { 
+    		this.loadCss( 'touch/resources/css/mountainview.css' ); // css url will be like touch/resources/css/bb6.css
+//		}
     	var panel=Ext.create('sms.view.MainTabPanel');
     	panel.getTabBar().hide();
     	panel.setActiveItem(0);
@@ -69,5 +75,13 @@ Ext.application({
                 }
             }
         );
-    }
+    },
+    
+    loadCss: function (filename) {
+    	var css = document.createElement('link');
+    	css.rel = "stylesheet"; 
+    	css.type = "text/css"; 
+    	css.href = filename; 
+    	document.getElementsByTagName('head')[0].appendChild(css); 
+	}
 });

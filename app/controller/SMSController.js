@@ -1,16 +1,12 @@
 Ext.define('sms.controller.SMSController',{
 	extend: 'Ext.app.Controller',
+	requires:['sms.model.User'],
 	config: {
-        refs: [{
-           selector : ['name=validateAccountButton'],
-           ref : 'validateAccountButton'
-        },{
-        	selector : ['name=maintabpanel'],
-            ref : 'mainTabPanel'
-        },{
-        	selector : ['name=otherAmount'],
-            ref : 'otherAmount'
-        }]
+        refs: {
+        	validateAccountButton : 'name=validateAccountButton',
+        	mainTabPanel : 'name=maintabpanel',
+        	otherAmount : 'name=otherAmount',
+        }
     },
 	init: function(){
 		this.control({
@@ -30,7 +26,6 @@ Ext.define('sms.controller.SMSController',{
 	},
 	
 	loadOptions: function(){
-		debugger;
 		
 		var tabPanel=Ext.getCmp('maintabpanel');
 		var button=Ext.getCmp('PINN');
@@ -43,7 +38,7 @@ Ext.define('sms.controller.SMSController',{
     			firstName:'Daniel',
     			lastName:'Falla',
     			minimumPayment:200.45,
-    			fullPayment:400
+    			fullPayment:400.00
     		});
     		this.setPaymentLabels(user);
     		tabPanel.setActiveItem(1);
@@ -56,9 +51,8 @@ Ext.define('sms.controller.SMSController',{
     sendPaymentOptionButton: function(){
     	var form=Ext.getCmp('paymentoptions');
     	form.updateRecord(form.paymentOptions, true);
-    	debugger;
     	var v=form.paymentOptions.get("payment");
-    	if (form.paymentOptions.get("payment")==null){
+    	if (form.paymentOptions.get("payment")==null && form.paymentOptions.get("otherAmount")==null){
     		Ext.Msg.alert('No option selected');
     	}else if ((form.paymentOptions.get("payment")!='agent')
     		|| form.paymentOptions.get("otherAmount")!=null){
@@ -80,9 +74,9 @@ Ext.define('sms.controller.SMSController',{
     
     setPaymentLabels: function(user){
     	var options=Ext.getCmp('fieldset');
-    	options.title='whatever';
+    	options.setTitle(user.get('firstName')+', you\'re late on your payments</br>Please select an option below:');
     	var fullOption=Ext.getCmp('full');
-    	fullOption.setLabel('Full payment: $'+user.get('fullPayment'));
+    	fullOption.setLabel('<div>Full payment: $'+user.get('fullPayment')+"</div>");
 		var minOption=Ext.getCmp('min');
 		minOption.setLabel('Minimum payment: $'+user.get('minimumPayment'));
 		var fullOption=Ext.getCmp('full');

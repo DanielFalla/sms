@@ -1,9 +1,9 @@
-Ext.define('SMS.store.DemoTreeStore', {
+Ext.define('sms.store.UserStore', {
 			extend: 'Ext.data.TreeStore',
 //            storeId: 'TreeStore',
-            requires: ['SMS.model.DemoEntry'],
+            requires: ['sms.model.User','Ext.data.proxy.JsonP'],
             config:{
-            	model:'SMS.model.DemoEntry',
+            	model:'sms.model.User',
             	proxy: {
             		type: 'jsonp',
             		url: 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&q=http://feeds.feedburner.com/SenchaBlog',

@@ -17,18 +17,18 @@ Ext.define('sms.view.Splash',{
 //    	        	instructions: '&copy; Copyright 2015 LiveVox, Inc. All rights reserved',
     	        	items: [
     	        	        {
-    	        	        	xtype: 'textfield',
-    	        	        	
+    	        	        	xtype: 'numberfield',
     	        	        	id:'PINN',
     	        	        	label: 'PIN #'
     	        	        },
     	        	]
-    	        },{
-    	        	xtype: 'button',
-    	        	text: 'Send',
-    	        	name: 'validateAccountButton',
     	        }
 	        ]
-		}]
+		},{
+        	xtype: 'button',
+        	docked: 'bottom',
+        	text: 'Send',
+        	name: 'validateAccountButton',
+        }]
 	}
 });

@@ -72,7 +72,7 @@
      */
     "css": [
         {
-            "path": "resources/css/app.css",
+            "path": "touch/resources/css/mountainview.css",
             "update": "delta"
         }
     ],
