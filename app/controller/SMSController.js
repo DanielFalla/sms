@@ -37,8 +37,8 @@ Ext.define('sms.controller.SMSController',{
     		var user=Ext.create('sms.model.User',{
     			firstName:'Daniel',
     			lastName:'Falla',
-    			minimumPayment:200.45,
-    			fullPayment:400.00
+    			minimumPayment:2000.45,
+    			fullPayment:4000.00
     		});
     		this.setPaymentLabels(user);
     		tabPanel.setActiveItem(1);
@@ -53,7 +53,7 @@ Ext.define('sms.controller.SMSController',{
     	form.updateRecord(form.paymentOptions, true);
     	var v=form.paymentOptions.get("payment");
     	if (form.paymentOptions.get("payment")==null && form.paymentOptions.get("otherAmount")==null){
-    		Ext.Msg.alert('No option selected');
+    		Ext.Msg.alert('Please select an option');
     	}else if ((form.paymentOptions.get("payment")!='agent')
     		|| form.paymentOptions.get("otherAmount")!=null){
     		Ext.Msg.alert('Alert', 'Your payment request is being processed. Thank you');
@@ -74,11 +74,11 @@ Ext.define('sms.controller.SMSController',{
     
     setPaymentLabels: function(user){
     	var options=Ext.getCmp('fieldset');
-    	options.setTitle(user.get('firstName')+', you\'re late on your payments</br>Please select an option below:');
+    	options.setTitle(user.get('firstName')+', you\'re late on your payments');
     	var fullOption=Ext.getCmp('full');
-    	fullOption.setLabel('<div>Full payment: $'+user.get('fullPayment')+"</div>");
+    	fullOption.setLabel('<div style="width: 100%; overflow: hidden;"><div style="float: left;">Full payment:</div><div align="right"> $'+sms.utils.Functions.addCommas(user.get('fullPayment'))+"</div></div>");
 		var minOption=Ext.getCmp('min');
-		minOption.setLabel('Minimum payment: $'+user.get('minimumPayment'));
+		minOption.setLabel('<div style="width: 100%; overflow: hidden;"><div style="float: left;">Minimum payment:</div><div align="right"> $'+sms.utils.Functions.addCommas(user.get('minimumPayment'))+"</div></div>");
 		var fullOption=Ext.getCmp('full');
     }
     

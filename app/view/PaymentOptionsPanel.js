@@ -22,9 +22,10 @@ Ext.define('sms.view.PaymentOptionsPanel',{
 			items:[{
 				xtype: 'fieldset',
 				id:'fieldset',
+				instructions:'Please select an option',
 				defaults:{
 					xtype:'radiofield',
-					labelWidth:'80%'
+					labelWidth:'90%'
 				},
 				items:[
 				    {
@@ -42,6 +43,7 @@ Ext.define('sms.view.PaymentOptionsPanel',{
 				    	labelWidth:'80',
 				    	name:'otherAmount',
 				    	minValue: 0,
+				    	align: 'right'
 				    },{
 				    	id: 'agent',
 				    	name:'payment',

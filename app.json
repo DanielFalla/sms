@@ -72,7 +72,18 @@
      */
     "css": [
         {
-            "path": "touch/resources/css/mountainview.css",
+        	"path": "resources/css/cupertino-classic.css",
+			"platform": ["ios"],
+            "update": "delta"
+        },
+        {
+        	"path": "resources/css/mountainview.css",
+			"platform": ["android"],
+            "update": "delta"
+        },
+        {
+        	"path": "resources/css/app.css",
+			"platform": ["chrome","safari","firefox","ie10"],
             "update": "delta"
         }
     ],

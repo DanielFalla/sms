@@ -14,7 +14,7 @@ Ext.application({
     name: 'sms',
 
     requires: [
-        'Ext.MessageBox','sms.view.MainTabPanel','sms.model.PaymentOptions'
+        'Ext.MessageBox','sms.view.MainTabPanel','sms.model.PaymentOptions','sms.utils.Functions'
     ],
 
     views: [
@@ -50,7 +50,7 @@ Ext.application({
 
     launch: function() {
 //    	if( Ext.os.is.Android ) { 
-    		this.loadCss( 'touch/resources/css/mountainview.css' ); // css url will be like touch/resources/css/bb6.css
+//    		this.loadCss( 'touch/resources/css/cupertino-classic.css' ); // css url will be like touch/resources/css/bb6.css
 //		}
     	var panel=Ext.create('sms.view.MainTabPanel');
     	panel.getTabBar().hide();
