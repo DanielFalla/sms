@@ -44,7 +44,7 @@ Ext.define('sms.controller.SMSController',{
     		tabPanel.setActiveItem(1);
     	}
     	else{
-    		Ext.Msg.alert('Alert','Invalid PIN number. Please try again');
+    		Ext.Msg.alert('Error','Invalid PIN number. Please try again');
     	}
     },
     
@@ -53,7 +53,7 @@ Ext.define('sms.controller.SMSController',{
     	form.updateRecord(form.paymentOptions, true);
     	var v=form.paymentOptions.get("payment");
     	if (form.paymentOptions.get("payment")==null && form.paymentOptions.get("otherAmount")==null){
-    		Ext.Msg.alert('Please select an option');
+    		Ext.Msg.alert('Error', 'Please select an option');
     	}else if ((form.paymentOptions.get("payment")!='agent')
     		|| form.paymentOptions.get("otherAmount")!=null){
     		Ext.Msg.alert('Alert', 'Your payment request is being processed. Thank you');
@@ -66,6 +66,8 @@ Ext.define('sms.controller.SMSController',{
     	Ext.getCmp('full').uncheck();
     	Ext.getCmp('min').uncheck();
     	Ext.getCmp('agent').uncheck();
+    	var form=Ext.getCmp('paymentoptions');
+    	form.paymentOptions.set('payment',null);
     },
     
     emptyOtherAmountField: function( check, e, eOpts){

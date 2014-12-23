@@ -80,11 +80,6 @@
         	"path": "resources/css/mountainview.css",
 			"platform": ["android"],
             "update": "delta"
-        },
-        {
-        	"path": "resources/css/app.css",
-			"platform": ["chrome","safari","firefox","ie10"],
-            "update": "delta"
         }
     ],
 

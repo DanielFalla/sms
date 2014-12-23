@@ -49,9 +49,9 @@ Ext.application({
     },
 
     launch: function() {
-//    	if( Ext.os.is.Android ) { 
-//    		this.loadCss( 'touch/resources/css/cupertino-classic.css' ); // css url will be like touch/resources/css/bb6.css
-//		}
+    	if( Ext.os.is.Windows || Ext.os.is.Linux || Ext.os.is.MacOs ) { 
+    		this.loadCss( 'resources/css/app.css' ); // css url will be like touch/resources/css/bb6.css
+		}
     	var panel=Ext.create('sms.view.MainTabPanel');
     	panel.getTabBar().hide();
     	panel.setActiveItem(0);
