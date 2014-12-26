@@ -1,6 +1,7 @@
 Ext.define('sms.controller.SMSController',{
 	extend: 'Ext.app.Controller',
 	requires:['sms.model.User'],
+	user:undefined,
 	config: {
         refs: {
         	validateAccountButton : 'name=validateAccountButton',
@@ -44,7 +45,7 @@ Ext.define('sms.controller.SMSController',{
     		tabPanel.setActiveItem(1);
     	}
     	else{
-    		Ext.Msg.alert('Error','Invalid PIN number. Please try again');
+    		Ext.Msg.alert('Error','Invalid PIN. Please try again');
     	}
     },
     
@@ -54,8 +55,15 @@ Ext.define('sms.controller.SMSController',{
     	var v=form.paymentOptions.get("payment");
     	if (form.paymentOptions.get("payment")==null && form.paymentOptions.get("otherAmount")==null){
     		Ext.Msg.alert('Error', 'Please select an option');
-    	}else if ((form.paymentOptions.get("payment")!='agent')
-    		|| form.paymentOptions.get("otherAmount")!=null){
+    	}else if (form.paymentOptions.get("otherAmount")!=null){
+    			var otherAmount=form.paymentOptions.get("otherAmount");
+    			var minPayment=this.user.get('minimumPayment');
+    			var fullPayment=this.user.get('fullPayment');
+    			if (!(minPayment<=otherAmount && otherAmount<=fullPayment))
+    				Ext.Msg.alert('Error', 'Amount specified must be between minimum and full payment amounts');
+    			else
+    				Ext.Msg.alert('Alert', 'Your payment request is being processed. Thank you');
+    	}else if(form.paymentOptions.get("payment")!='agent'){
     		Ext.Msg.alert('Alert', 'Your payment request is being processed. Thank you');
     	}else{
     		Ext.Msg.alert('Alert','An agent will call you shortly');
@@ -75,6 +83,7 @@ Ext.define('sms.controller.SMSController',{
     },
     
     setPaymentLabels: function(user){
+    	this.user=user;
     	var options=Ext.getCmp('fieldset');
     	options.setTitle(user.get('firstName')+', you\'re late on your payments');
     	var fullOption=Ext.getCmp('full');

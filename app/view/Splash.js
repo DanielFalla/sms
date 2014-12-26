@@ -13,13 +13,13 @@ Ext.define('sms.view.Splash',{
 	     	items: [
     	        {
     	        	xtype: 'fieldset',
-    	        	title: 'Please enter your PIN number',
+    	        	title: 'Please enter your PIN',
 //    	        	instructions: '&copy; Copyright 2015 LiveVox, Inc. All rights reserved',
     	        	items: [
     	        	        {
     	        	        	xtype: 'numberfield',
     	        	        	id:'PINN',
-    	        	        	label: 'PIN #'
+    	        	        	label: 'PIN'
     	        	        },
     	        	]
     	        }
