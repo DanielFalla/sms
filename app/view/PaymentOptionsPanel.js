@@ -57,6 +57,7 @@ Ext.define('sms.view.PaymentOptionsPanel',{
         	docked:'bottom',
         	text: 'Send',
         	name: 'sendPaymentOptionButton',
+        	id:'sendPaymentOptionButton'
         }]
 	}
 });

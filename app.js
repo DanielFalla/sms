@@ -47,10 +47,13 @@ Ext.application({
         '1536x2008': 'resources/startup/1536x2008.png',
         '1496x2048': 'resources/startup/1496x2048.png'
     },
+    
+    onReady: function(){
+    },
 
     launch: function() {
     	if( Ext.os.is.Windows || Ext.os.is.Linux || Ext.os.is.MacOs ) { 
-    		this.loadCss( 'resources/css/app.css' ); // css url will be like touch/resources/css/bb6.css
+    		this.loadCss( 'resources/css/app.css' );
 		}
     	var panel=Ext.create('sms.view.MainTabPanel');
     	panel.getTabBar().hide();
@@ -60,9 +63,12 @@ Ext.application({
     		payment:undefined,
     		otherAmount:undefined,
     	});
-    	
     	popanel.setRecord(popanel.paymentOptions);
         Ext.Viewport.add(panel);
+        Ext.getCmp('PIN').focus();
+        Ext.getCmp('PIN').fireAction('tap');
+        showKeyboard();
+        Ext.getCmp('validateAccountButton').fireAction('tap');
     },
 
     onUpdated: function() {
@@ -85,3 +91,7 @@ Ext.application({
     	document.getElementsByTagName('head')[0].appendChild(css); 
 	}
 });
+
+function showKeyboard(){
+	document.getElementById("ext-element-22").click();
+}

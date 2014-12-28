@@ -15,7 +15,7 @@ Ext.define('sms.controller.SMSController',{
     			tap:this.loadOptions
     		},
     		'[name=sendPaymentOptionButton]':{
-    			tap:this.sendPaymentOptionButton
+    			tap:this.sendPaymentOption
     		},
     		'[name=otherAmount]':{
     			keyup:this.uncheckRadioButtons
@@ -23,18 +23,45 @@ Ext.define('sms.controller.SMSController',{
     		'[name=payment]':{
     			check:this.emptyOtherAmountField
     		},
+    		'[id=PIN]':{
+    			keyup:this.enterPIN
+    		},
+    		'[id=otherAmount]':{
+    			keyup:this.enterOtherAmount
+    		}
 		});
 	},
 	
+	enterPIN: function( e, eOpts){
+		if (eOpts.event.keyCode == 13)
+			this.loadOptions();
+	},
+	
+	enterOtherAmount: function(e, eOpts){
+		if (eOpts.event.keyCode == 13)
+			this.sendPaymentOption();
+	},
+	
+    loading: true,
+    
+    
+	
 	loadOptions: function(){
-		
-		var tabPanel=Ext.getCmp('maintabpanel');
-		var button=Ext.getCmp('PINN');
-		this.validateAccount(tabPanel);
+		if (this.loading){
+//			Ext.Msg.alert('Error','Invalid PIN. Please try again').setTop(4000);
+    		setTimeout(function() {
+                
+//    			Ext.Msg.alert('Error','Invalid PIN. Please try again').hide();
+            }, 1000);
+    		this.loading=false;
+		}else{
+			var tabPanel=Ext.getCmp('maintabpanel');
+			this.validateAccount(tabPanel);
+		}
     },
     
     validateAccount: function(tabPanel){
-    	if (Ext.getCmp('PINN').getValue()=="123"){
+    	if (Ext.getCmp('PIN').getValue()=="123"){
     		var user=Ext.create('sms.model.User',{
     			firstName:'Daniel',
     			lastName:'Falla',
@@ -49,7 +76,7 @@ Ext.define('sms.controller.SMSController',{
     	}
     },
     
-    sendPaymentOptionButton: function(){
+    sendPaymentOption: function(){
     	var form=Ext.getCmp('paymentoptions');
     	form.updateRecord(form.paymentOptions, true);
     	var v=form.paymentOptions.get("payment");
@@ -60,7 +87,7 @@ Ext.define('sms.controller.SMSController',{
     			var minPayment=this.user.get('minimumPayment');
     			var fullPayment=this.user.get('fullPayment');
     			if (!(minPayment<=otherAmount && otherAmount<=fullPayment))
-    				Ext.Msg.alert('Error', 'Amount specified must be between minimum and full payment amounts');
+    				Ext.Msg.alert('Error', 'The amount specified must be between minimum and full payment amounts');
     			else
     				Ext.Msg.alert('Alert', 'Your payment request is being processed. Thank you');
     	}else if(form.paymentOptions.get("payment")!='agent'){
@@ -85,7 +112,7 @@ Ext.define('sms.controller.SMSController',{
     setPaymentLabels: function(user){
     	this.user=user;
     	var options=Ext.getCmp('fieldset');
-    	options.setTitle(user.get('firstName')+', you\'re late on your payments');
+    	options.setTitle(user.get('firstName')+', you\'re late on your payment');
     	var fullOption=Ext.getCmp('full');
     	fullOption.setLabel('<div style="width: 100%; overflow: hidden;"><div style="float: left;">Full payment:</div><div align="right"> $'+sms.utils.Functions.addCommas(user.get('fullPayment'))+"</div></div>");
 		var minOption=Ext.getCmp('min');
