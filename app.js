@@ -66,9 +66,6 @@ Ext.application({
     	popanel.setRecord(popanel.paymentOptions);
         Ext.Viewport.add(panel);
         Ext.getCmp('PIN').focus();
-        Ext.getCmp('PIN').fireAction('tap');
-        showKeyboard();
-        Ext.getCmp('validateAccountButton').fireAction('tap');
     },
 
     onUpdated: function() {
@@ -92,6 +89,15 @@ Ext.application({
 	}
 });
 
-function showKeyboard(){
-	document.getElementById("ext-element-22").click();
-}
+//
+//function showKeyboard(){
+//	$('#ext-element-22').click(function(e){ alert('automaticclick');$(this).focus(); });
+//	$('#initButton').click(function(e)
+//	        {
+//	            $('#ext-element-22').trigger('click');
+//	        });
+//}
+//
+//function triggerField(){
+//	$('#initButton').trigger('click');
+//}

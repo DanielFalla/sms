@@ -17,9 +17,6 @@ Ext.define('sms.controller.SMSController',{
     		'[name=sendPaymentOptionButton]':{
     			tap:this.sendPaymentOption
     		},
-    		'[name=otherAmount]':{
-    			keyup:this.uncheckRadioButtons
-    		},
     		'[name=payment]':{
     			check:this.emptyOtherAmountField
     		},
@@ -27,6 +24,7 @@ Ext.define('sms.controller.SMSController',{
     			keyup:this.enterPIN
     		},
     		'[id=otherAmount]':{
+    			focus:this.setCursor,
     			keyup:this.enterOtherAmount
     		}
 		});
@@ -40,24 +38,46 @@ Ext.define('sms.controller.SMSController',{
 	enterOtherAmount: function(e, eOpts){
 		if (eOpts.event.keyCode == 13)
 			this.sendPaymentOption();
+		else{
+			Ext.getCmp('full').uncheck();
+	    	Ext.getCmp('min').uncheck();
+	    	Ext.getCmp('agent').uncheck();
+	    	var form=Ext.getCmp('paymentoptions');
+	    	form.paymentOptions.set('payment',null);
+	    	
+	    	//Mask the input number
+	    	var str;
+	    	if (eOpts.event.keyCode != 48){
+	    		var val= Ext.getCmp('otherAmount').getValue();
+	    		str=val.toString().replace(".", "");
+	    	}else{
+	    		var val= Ext.getCmp('otherAmount').getValue();
+	    		if ((val-Math.floor(val))==0 && val!=0)
+	    			str=val.toString().replace(".", "")+'000';
+	    		else if ((val-Math.floor(val))>=0.1 && val!=0)
+	    			str=val.toString().replace(".", "")+'00';
+	    		else if ((val-Math.floor(val))<0.1 && val!=0)
+	    			str=val.toString().replace(".", "")+'0';
+	    		else
+	    			str=val.toString().replace(".", "");
+	    	}
+	    	var input=document.getElementsByName("otherAmount");
+	    	input[0].value= parseFloat(sms.utils.Functions.insertStringInString(str,'.')).toFixed(2);
+		}
 	},
 	
-    loading: true,
-    
-    
+	setCursor: function(a, e, eOpts){
+		//Set value to zero if there's nothing in the box
+		if (Ext.getCmp('otherAmount').getValue()==null
+				|| Ext.getCmp('otherAmount').getValue()==""){
+	    	var input=document.getElementsByName("otherAmount");
+	    	input[0].value= parseFloat(0).toFixed(2);
+		}
+	},
 	
 	loadOptions: function(){
-		if (this.loading){
-//			Ext.Msg.alert('Error','Invalid PIN. Please try again').setTop(4000);
-    		setTimeout(function() {
-                
-//    			Ext.Msg.alert('Error','Invalid PIN. Please try again').hide();
-            }, 1000);
-    		this.loading=false;
-		}else{
-			var tabPanel=Ext.getCmp('maintabpanel');
-			this.validateAccount(tabPanel);
-		}
+		var tabPanel=Ext.getCmp('maintabpanel');
+		this.validateAccount(tabPanel);
     },
     
     validateAccount: function(tabPanel){
@@ -95,14 +115,6 @@ Ext.define('sms.controller.SMSController',{
     	}else{
     		Ext.Msg.alert('Alert','An agent will call you shortly');
     	}
-    },
-    
-    uncheckRadioButtons: function(){
-    	Ext.getCmp('full').uncheck();
-    	Ext.getCmp('min').uncheck();
-    	Ext.getCmp('agent').uncheck();
-    	var form=Ext.getCmp('paymentoptions');
-    	form.paymentOptions.set('payment',null);
     },
     
     emptyOtherAmountField: function( check, e, eOpts){

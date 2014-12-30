@@ -7,7 +7,7 @@ Ext.define('sms.view.Splash',{
 		items:[{
 			docked:'top',
 			xtype: 'titlebar',
-			title: 'LV Mobile Payment App',
+			title: 'LV Mobile Payment',
 			layout:'vbox',
 		},{
 	    	items: [
@@ -18,7 +18,7 @@ Ext.define('sms.view.Splash',{
 	        	        	label: 'PIN'
 	        	        },
 	        ]
-		},{
+        },{
         	xtype: 'button',
         	docked: 'bottom',
         	text: 'Send',

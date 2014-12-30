@@ -14,5 +14,8 @@ Ext.define('sms.utils.Functions',{
 			return x1 + x2 + '.00';
 		else
 			return x1 + x2;
+	},
+	insertStringInString: function (a, b){
+		return [a.slice(0, a.length-2), b, a.slice(a.length-2)].join('');
 	}
 });

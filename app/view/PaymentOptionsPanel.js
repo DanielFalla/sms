@@ -42,8 +42,8 @@ Ext.define('sms.view.PaymentOptionsPanel',{
 				    	label: 'Other amount:',
 				    	labelWidth:'80',
 				    	name:'otherAmount',
-				    	minValue: 0,
-				    	align: 'right'
+				    	style: 'text-align: right'
+
 				    },{
 				    	id: 'agent',
 				    	name:'payment',
@@ -61,3 +61,21 @@ Ext.define('sms.view.PaymentOptionsPanel',{
         }]
 	}
 });
+
+function setCursorPosition(obj, pos) {   
+    if(obj != null) {
+            
+            var len = obj.val().length;
+            obj.focus();
+            obj.setSelectionRange(len, len);
+//        }
+//        else {
+//            if(obj.selectionStart) {
+//                obj.focus();
+//                obj.setSelectionRange(pos, pos);
+//            }
+//            else
+//                obj.focus();
+//        }
+    }
+}  
