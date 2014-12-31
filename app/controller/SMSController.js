@@ -21,13 +21,18 @@ Ext.define('sms.controller.SMSController',{
     			check:this.emptyOtherAmountField
     		},
     		'[id=PIN]':{
-    			keyup:this.enterPIN
+    			keyup:this.enterPIN,
+    			blur:this.blurPIN
     		},
     		'[id=otherAmount]':{
     			focus:this.setCursor,
     			keyup:this.enterOtherAmount
-    		}
+    		},
 		});
+	},
+	
+	blurPIN:function(e,eOpts){
+		Ext.getCmp('PIN').focus();
 	},
 	
 	enterPIN: function( e, eOpts){

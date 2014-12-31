@@ -65,7 +65,6 @@ Ext.application({
     	});
     	popanel.setRecord(popanel.paymentOptions);
         Ext.Viewport.add(panel);
-        Ext.getCmp('PIN').focus();
     },
 
     onUpdated: function() {

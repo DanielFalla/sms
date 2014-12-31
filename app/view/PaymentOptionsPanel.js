@@ -61,21 +61,3 @@ Ext.define('sms.view.PaymentOptionsPanel',{
         }]
 	}
 });
-
-function setCursorPosition(obj, pos) {   
-    if(obj != null) {
-            
-            var len = obj.val().length;
-            obj.focus();
-            obj.setSelectionRange(len, len);
-//        }
-//        else {
-//            if(obj.selectionStart) {
-//                obj.focus();
-//                obj.setSelectionRange(pos, pos);
-//            }
-//            else
-//                obj.focus();
-//        }
-    }
-}  

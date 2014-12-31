@@ -10,14 +10,21 @@ Ext.define('sms.view.Splash',{
 			title: 'LV Mobile Payment',
 			layout:'vbox',
 		},{
-	    	items: [
-	        	        {
-	        	        	xtype: 'numberfield',
-	        	        	id:'PIN',
-	        	        	isFocused:true,
-	        	        	label: 'PIN'
-	        	        },
-	        ]
+	    	items: [{
+    	        xtype:'fieldset',
+    	        id:'splash',
+    	        defaults:{
+					labelWidth:'85%'
+				},
+    	        items:[
+	               {
+	            	   xtype: 'numberfield',
+	            	   id:'PIN',
+	            	   label: 'Please enter your PIN:',
+	            	   labelWidth:'80',
+	               },
+               ]
+	    	}]
         },{
         	xtype: 'button',
         	docked: 'bottom',
