@@ -52,22 +52,13 @@ Ext.define('sms.controller.SMSController',{
 	    	
 	    	//Mask the input number
 	    	var str;
-	    	if (eOpts.event.keyCode != 48){
-	    		var val= Ext.getCmp('otherAmount').getValue();
-	    		str=val.toString().replace(".", "");
-	    	}else{
-	    		var val= Ext.getCmp('otherAmount').getValue();
-	    		if ((val-Math.floor(val)).toFixed(2)==0 && val!=0)
-	    			str=val.toString().replace(".", "")+'000';
-	    		else if ((val-Math.floor(val)).toFixed(2)>=0.1 && val!=0)
-	    			str=val.toString().replace(".", "")+'00';
-	    		else if ((val-Math.floor(val)).toFixed(2)<0.1 && val!=0)
-	    			str=val.toString().replace(".", "")+'0';
-	    		else
-	    			str=val.toString().replace(".", "");
-	    	}
+	    	var val= Ext.getCmp('otherAmount').getValue();
+	    	if (eOpts.event.keyCode != 8)
+	    		str=val.toFixed(3).replace(".", "");
+	    	else
+	    		str=val.toFixed(1).replace(".", "");
 	    	var input=document.getElementsByName("otherAmount");
-	    	input[0].value= parseFloat(sms.utils.Functions.insertStringInString(str,'.')).toFixed(2);
+	    	input[0].value= parseFloat(sms.utils.Functions.moneyFormat(str)).toFixed(2);
 		}
 	},
 	
@@ -90,7 +81,7 @@ Ext.define('sms.controller.SMSController',{
     		var user=Ext.create('sms.model.User',{
     			firstName:'Daniel',
     			lastName:'Falla',
-    			minimumPayment:2000.45,
+    			minimumPayment:2000.40,
     			fullPayment:4000.00
     		});
     		this.setPaymentLabels(user);
@@ -131,9 +122,9 @@ Ext.define('sms.controller.SMSController',{
     	var options=Ext.getCmp('fieldset');
     	options.setTitle(user.get('firstName')+', you\'re late on your payment');
     	var fullOption=Ext.getCmp('full');
-    	fullOption.setLabel('<div style="width: 100%; overflow: hidden;"><div style="float: left;">Full payment:</div><div align="right"> $'+sms.utils.Functions.addCommas(user.get('fullPayment'))+"</div></div>");
+    	fullOption.setLabel('<div style="width: 100%; overflow: hidden;"><div style="float: left;">Full payment:</div><div align="right"> $'+sms.utils.Functions.addNumberCommas(user.get('fullPayment'))+"</div></div>");
 		var minOption=Ext.getCmp('min');
-		minOption.setLabel('<div style="width: 100%; overflow: hidden;"><div style="float: left;">Minimum payment:</div><div align="right"> $'+sms.utils.Functions.addCommas(user.get('minimumPayment'))+"</div></div>");
+		minOption.setLabel('<div style="width: 100%; overflow: hidden;"><div style="float: left;">Minimum payment:</div><div align="right"> $'+sms.utils.Functions.addNumberCommas(user.get('minimumPayment'))+"</div></div>");
 		var fullOption=Ext.getCmp('full');
     }
     
