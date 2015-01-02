@@ -1,6 +1,6 @@
 Ext.define('sms.controller.SMSController',{
 	extend: 'Ext.app.Controller',
-	requires:['sms.model.User'],
+	requires:['sms.model.User', 'sms.view.NumericPassword'],
 	user:undefined,
 	config: {
         refs: {
@@ -57,11 +57,11 @@ Ext.define('sms.controller.SMSController',{
 	    		str=val.toString().replace(".", "");
 	    	}else{
 	    		var val= Ext.getCmp('otherAmount').getValue();
-	    		if ((val-Math.floor(val))==0 && val!=0)
+	    		if ((val-Math.floor(val)).toFixed(2)==0 && val!=0)
 	    			str=val.toString().replace(".", "")+'000';
-	    		else if ((val-Math.floor(val))>=0.1 && val!=0)
+	    		else if ((val-Math.floor(val)).toFixed(2)>=0.1 && val!=0)
 	    			str=val.toString().replace(".", "")+'00';
-	    		else if ((val-Math.floor(val))<0.1 && val!=0)
+	    		else if ((val-Math.floor(val)).toFixed(2)<0.1 && val!=0)
 	    			str=val.toString().replace(".", "")+'0';
 	    		else
 	    			str=val.toString().replace(".", "");

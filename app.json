@@ -71,6 +71,9 @@
      *      }
      */
     "css": [
+    	{
+    		"path":"resources/css/sms.css"
+    	},
         {
         	"path": "resources/css/cupertino-classic.css",
 			"platform": ["ios"],

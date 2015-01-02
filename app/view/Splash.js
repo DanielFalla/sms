@@ -1,4 +1,5 @@
 Ext.define('sms.view.Splash',{
+	requires:['sms.view.NumericPassword'],
 	extend: 'Ext.Panel',
 	alias   : 'widget.splash',
 	id: 'splash',
@@ -12,13 +13,13 @@ Ext.define('sms.view.Splash',{
 		},{
 	    	items: [{
     	        xtype:'fieldset',
-    	        id:'splash',
+    	        id:'splashfieldset',
     	        defaults:{
 					labelWidth:'85%'
 				},
     	        items:[
 	               {
-	            	   xtype: 'numberfield',
+	            	   xtype: 'numericpasswordfield',
 	            	   id:'PIN',
 	            	   label: 'Please enter your PIN:',
 	            	   labelWidth:'80',
