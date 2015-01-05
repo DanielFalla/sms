@@ -11,11 +11,6 @@ Ext.define("sms.view.MainTabPanel", {
 	        	iconCls: 'home',
 	        	cls: 'home',
 	        	xtype:'splash'
-	        },{
-	        	title: 'Payment Options',
-	        	iconCls: 'star',
-	        	
-	        	xtype:'paymentoptions'
 	        }
         ]
     }

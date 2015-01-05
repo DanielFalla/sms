@@ -8,30 +8,20 @@ Ext.define('sms.view.Splash',{
 		items:[{
 			docked:'top',
 			xtype: 'titlebar',
-			title: 'LV Mobile Payment',
+			title: 'Promise to Pay',
 			layout:'vbox',
 		},{
 	    	items: [{
-    	        xtype:'fieldset',
-    	        id:'splashfieldset',
-    	        defaults:{
-					labelWidth:'85%'
-				},
-    	        items:[
-	               {
-	            	   xtype: 'numericpasswordfield',
-	            	   id:'PIN',
-	            	   label: 'Please enter your PIN:',
-	            	   labelWidth:'80',
-	               },
-               ]
+    	        xtype:'label',
+    	        id:'responselabel',
+    	        width: '100%'
 	    	}]
-        },{
-        	xtype: 'button',
-        	docked: 'bottom',
-        	text: 'Send',
-        	name: 'validateAccountButton',
-        	id: 'validateAccountButton'
+//        },{
+//        	xtype: 'button',
+//        	docked: 'bottom',
+//        	text: 'Send',
+//        	name: 'validateAccountButton',
+//        	id: 'validateAccountButton'
         }]
 	}
 });

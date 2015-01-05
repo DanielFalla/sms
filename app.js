@@ -58,12 +58,13 @@ Ext.application({
     	var panel=Ext.create('sms.view.MainTabPanel');
     	panel.getTabBar().hide();
     	panel.setActiveItem(0);
-    	var popanel=Ext.getCmp('paymentoptions');
-    	popanel.paymentOptions=Ext.create('sms.model.PaymentOptions',{
-    		payment:undefined,
-    		otherAmount:undefined,
-    	});
-    	popanel.setRecord(popanel.paymentOptions);
+    	var label=Ext.getCmp('responselabel');
+    	label.setHtml('VZ Message:We have received your confirmation and have processed your Promise to Pay.');
+//    	popanel.paymentOptions=Ext.create('sms.model.PaymentOptions',{
+//    		payment:undefined,
+//    		otherAmount:undefined,
+//    	});
+//    	popanel.setRecord(popanel.paymentOptions);
         Ext.Viewport.add(panel);
     },
 
