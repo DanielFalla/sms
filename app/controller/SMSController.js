@@ -10,6 +10,7 @@ Ext.define('sms.controller.SMSController',{
         }
     },
 	init: function(){
+		sms.utils.Config.getUrlParameter('id');
 		this.control({
 			'[name=validateAccountButton]':{
     			tap:this.loadOptions

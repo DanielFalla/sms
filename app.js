@@ -14,7 +14,7 @@ Ext.application({
     name: 'sms',
 
     requires: [
-        'Ext.MessageBox','sms.view.MainTabPanel','sms.model.PaymentOptions','sms.utils.Functions'
+        'Ext.MessageBox','sms.view.MainTabPanel','sms.model.PaymentOptions','sms.utils.Functions','sms.utils.Config'
     ],
 
     views: [
