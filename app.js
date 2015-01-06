@@ -14,20 +14,17 @@ Ext.application({
     name: 'sms',
 
     requires: [
-        'Ext.MessageBox','sms.view.MainTabPanel','sms.model.PaymentOptions','sms.utils.Functions','sms.utils.Config'
+        'Ext.TitleBar','Ext.Label','Ext.MessageBox','sms.view.MainTabPanel','sms.utils.Functions','sms.utils.Config'
     ],
 
     views: [
         'sms.view.Splash',
-        'sms.view.PaymentOptionsPanel'
     ],
     
     controllers:[
-         'sms.controller.SMSController'
     ],
     
     stores:[
-         'sms.store.UserStore'
     ],
 
     icon: {
@@ -52,19 +49,11 @@ Ext.application({
     },
 
     launch: function() {
-    	if( Ext.os.is.Windows || Ext.os.is.Linux || Ext.os.is.MacOs ) { 
-    		this.loadCss( 'resources/css/app.css' );
-		}
     	var panel=Ext.create('sms.view.MainTabPanel');
     	panel.getTabBar().hide();
     	panel.setActiveItem(0);
     	var label=Ext.getCmp('responselabel');
-    	label.setHtml('VZ Message:We have received your confirmation and have processed your Promise to Pay.');
-//    	popanel.paymentOptions=Ext.create('sms.model.PaymentOptions',{
-//    		payment:undefined,
-//    		otherAmount:undefined,
-//    	});
-//    	popanel.setRecord(popanel.paymentOptions);
+    	label.setHtml('<br/><br/><div align=\'center\'>VZ Message: We have received your confirmation and have processed your Promise to Pay.</div>');
         Ext.Viewport.add(panel);
     },
 
@@ -80,24 +69,5 @@ Ext.application({
         );
     },
     
-    loadCss: function (filename) {
-    	var css = document.createElement('link');
-    	css.rel = "stylesheet"; 
-    	css.type = "text/css"; 
-    	css.href = filename; 
-    	document.getElementsByTagName('head')[0].appendChild(css); 
-	}
 });
 
-//
-//function showKeyboard(){
-//	$('#ext-element-22').click(function(e){ alert('automaticclick');$(this).focus(); });
-//	$('#initButton').click(function(e)
-//	        {
-//	            $('#ext-element-22').trigger('click');
-//	        });
-//}
-//
-//function triggerField(){
-//	$('#initButton').trigger('click');
-//}

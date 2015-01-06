@@ -8,13 +8,14 @@ Ext.define('sms.view.Splash',{
 		items:[{
 			docked:'top',
 			xtype: 'titlebar',
-			title: 'Promise to Pay',
+			title: 'Verizon',
 			layout:'vbox',
 		},{
 	    	items: [{
     	        xtype:'label',
     	        id:'responselabel',
-    	        width: '100%'
+    	        width: '100%',
+    	        centered:true
 	    	}]
 //        },{
 //        	xtype: 'button',

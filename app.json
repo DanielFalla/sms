@@ -75,23 +75,7 @@
     		"path":"resources/css/sms.css"
     	},
         {
-        	"path": "resources/css/cupertino-classic.css",
-			"platform": ["ios"],
-            "update": "delta"
-        },
-        {
-        	"path": "resources/css/mountainview.css",
-			"platform": ["android"],
-            "update": "delta"
-        },
-        {
-        	"path": "resources/css/bb10.css",
-			"platform": ["blackberry"],
-            "update": "delta"
-        },
-        {
-        	"path": "resources/css/app.css",
-			"platform": ["windows"],
+        	"path": "resources/css/verizon.css",
             "update": "delta"
         }
     ],
