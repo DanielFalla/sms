@@ -68,6 +68,5 @@ Ext.application({
             }
         );
     },
-    
 });
 
