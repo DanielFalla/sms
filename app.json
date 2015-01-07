@@ -75,6 +75,10 @@
     		"path":"resources/css/sms.css"
     	},
         {
+        	"path": "resources/css/base.css",
+            "update": "delta"
+        },
+        {
         	"path": "resources/css/verizon.css",
             "update": "delta"
         }
