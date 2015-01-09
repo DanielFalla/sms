@@ -53,7 +53,8 @@ Ext.application({
     	panel.getTabBar().hide();
     	panel.setActiveItem(0);
     	var label=Ext.getCmp('responselabel');
-    	label.setHtml('<section><div align=\'left\'><p>We have received your confirmation and have processed your Promise to Pay.</p></div></section>');
+    	label.setHtml('<section class="padding"><div align=\'left\'><p>We have received your confirmation and have processed your Promise to Pay.</p></div></section>');
+    	addFadedGray();
         Ext.Viewport.add(panel);
     },
 
@@ -69,4 +70,8 @@ Ext.application({
         );
     },
 });
+
+function addFadedGray(){
+	document.getElementById("messagepanel").parentNode.className = "faded-gray";
+}
 
