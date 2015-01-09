@@ -53,7 +53,7 @@ Ext.application({
     	panel.getTabBar().hide();
     	panel.setActiveItem(0);
     	var label=Ext.getCmp('responselabel');
-    	label.setHtml('<section><br/><br/><div align=\'center\'><h1>VZ Message: We have received your confirmation and have processed your Promise to Pay.</h1></div></section>');
+    	label.setHtml('<section><div align=\'left\'><p>We have received your confirmation and have processed your Promise to Pay.</p></div></section>');
         Ext.Viewport.add(panel);
     },
 
