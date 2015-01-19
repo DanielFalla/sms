@@ -2,6 +2,7 @@ Ext.define('sms.view.Splash',{
 	requires:['sms.view.NumericPassword'],
 	extend: 'Ext.Panel',
 	alias   : 'widget.splash',
+	scrollable : true,
 	id: 'splash',
 	config:{
 		fullscreen: true,
@@ -60,6 +61,7 @@ Ext.define('sms.view.Splash',{
         			html:'<section class=\'padt15 padding-left\'><a href="https://www.verizon.com/about/terms/" target="_blank">Terms &amp; Conditions</a></section>'
         		},{
         			xtype:'label',
+        			id:'footer',
         			html:'<section class=\'padt15 padding-left\'><a href="http://www.verizon.com/?r&amp;mobileexperience=false">Go to Full Site</a></section>'
         		}]
         	},{

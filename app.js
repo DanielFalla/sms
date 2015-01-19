@@ -50,10 +50,21 @@ Ext.application({
 
     launch: function() {
     	var panel=Ext.create('sms.view.MainTabPanel');
+    	var label=Ext.getCmp('responselabel');
+    	if (Ext.os.is.iOS)
+    		label.os="iOS";
+    	if (Ext.os.is.Android){
+    		label.os="Android";
+    		var html=Ext.getCmp('footer').getHtml();
+    		html+="<section><br><br></section>"
+    		Ext.getCmp('footer').setHtml(html);
+    	}
+    	
+    	hideAddressBar(label.os);
+    	
     	panel.getTabBar().hide();
     	panel.setActiveItem(0);
-    	var label=Ext.getCmp('responselabel');
-    	label.setHtml('<section class="padding"><div align=\'left\'><p>We have received your confirmation and have processed your Promise to Pay.</p></div></section>');
+    	label.setHtml('<section class="padding"><div align=\'left\'><p>Thank you for being a Verizon customer. Your Verizon account will be updated to show that you scheduled a payment arrangement with plans to complete that payment in the next 12 days. Be advised, failure to keep this arrangement in the next 12 days could result in suspension of service. Enjoy your day</p></div></section>');
     	addFadedGray();
         Ext.Viewport.add(panel);
     },
@@ -75,3 +86,14 @@ function addFadedGray(){
 	document.getElementById("messagepanel").parentNode.className = "faded-gray";
 }
 
+function hideAddressBar(os){
+	if (os=="iOS"){
+		document.documentElement.style.height='112%';
+		setTimeout(window.scrollTo(0, 0),0);
+	}
+	else 
+		if (os=="Android"){
+		document.documentElement.style.height='108%';
+		setTimeout(window.scrollTo(0, 1),0);
+	}
+}

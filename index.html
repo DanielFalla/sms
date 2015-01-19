@@ -2,6 +2,8 @@
 <html manifest="" lang="en-US">
 <head>
     <meta charset="UTF-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>sms</title>
     <style type="text/css">
          /**
@@ -53,10 +55,15 @@
     <script id="microloader" type="text/javascript" src=".sencha/app/microloader/development.js"></script>
 </head>
 <body>
-    <div id="appLoadingIndicator">
-        <div></div>
-        <div></div>
-        <div></div>
+	<div id="brim-main">
+	    <div id="appLoadingIndicator">
+	        <div></div>
+	        <div></div>
+	        <div></div>
+	    </div>
+    </div>
+    <div id="brim-mask">
+        <!-- Content displayed to the user when in minimal view.  -->
     </div>
 </body>
 </html>
