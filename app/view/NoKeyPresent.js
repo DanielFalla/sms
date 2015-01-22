@@ -2,8 +2,10 @@ Ext.define('sms.view.NoKeyPresent',{
 	extend: 'Ext.Panel',
 	alias   : 'widget.nokeypresent',
 	id: 'nokeypresent',
+	requires:['Ext.Label'],
 	config:{
 		fullscreen: true,
+		layout:'fit',
 		items:[{
 			docked:'top',
 			xtype: 'titlebar',
@@ -13,7 +15,7 @@ Ext.define('sms.view.NoKeyPresent',{
 	    	items: [{
     	        xtype:'label',
     	        id:'nokeyerror',
-    	        html:'No key provided.'
+    	        html:'<br><br><br><div align="center">Error: No key provided</div>'
 	    	}]
 	    }]
 	}

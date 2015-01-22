@@ -3,7 +3,6 @@ Ext.define('sms.utils.Config',{
 	endUserId: undefined,
 	pin:undefined,
 	getUrlParameter: function(keyname){
-		debugger;
         var strdata = window.location.search;
 
         var qindex = strdata.indexOf('?');

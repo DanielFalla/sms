@@ -14,7 +14,7 @@ Ext.application({
     name: 'sms',
 
     requires: [
-        'Ext.MessageBox','sms.view.MainTabPanel','sms.model.PaymentOptions','sms.utils.Functions','sms.utils.Config'
+        'Ext.MessageBox','sms.view.MainTabPanel','sms.model.PaymentOptions','sms.view.NoKeyPresent','sms.utils.Functions','sms.utils.Config'
     ],
 
     views: [
@@ -53,10 +53,9 @@ Ext.application({
 
     launch: function() {
 		sms.utils.Config.getUrlParameter('key');
+		if( Ext.os.is.Windows || Ext.os.is.Linux || Ext.os.is.MacOs )
+			this.loadCss( 'resources/css/app.css' );
 		if (sms.utils.Config.endUserId != undefined){
-			if( Ext.os.is.Windows || Ext.os.is.Linux || Ext.os.is.MacOs ) { 
-				this.loadCss( 'resources/css/app.css' );
-			}
 			var panel=Ext.create('sms.view.MainTabPanel');
 			panel.getTabBar().hide();
 			panel.setActiveItem(0);
@@ -68,7 +67,8 @@ Ext.application({
 			popanel.setRecord(popanel.paymentOptions);
 			Ext.Viewport.add(panel);
 		}else{
-			Ext.Viewport.add(Ext.widget('nokeypresent'));
+			var errorPanel=Ext.create('sms.view.NoKeyPresent');
+			Ext.Viewport.add(errorPanel);
 		}
 		
     },

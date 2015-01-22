@@ -9,7 +9,6 @@ Ext.define('sms.utils.Functions',{
 		while (rgx.test(x1)) {
 		    x1 = x1.replace(rgx, '$1' + ',' + '$2');
 		}
-		debugger;
 		if (x.length==1)
 			return x1 + x2 + '.00';
 		else if (parseFloat(nStr)-parseFloat(nStr).toFixed(1)==0)

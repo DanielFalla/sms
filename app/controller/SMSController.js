@@ -77,27 +77,37 @@ Ext.define('sms.controller.SMSController',{
     },
     
     validateAccount: function(tabPanel){
-    	var url='/SMS/auth/[key]/{pin}?pin=[pin]';
-    	debugger;
+    	var url='/SMS/auth/[key]';
     	sms.utils.Config.pin=Ext.getCmp('PIN').getValue();
     	url=url.replace('[key]',sms.utils.Config.endUserId);
-    	url=url.replace('[pin]',sms.utils.Config.pin);
     	var me=this;
+    	var param='pin='+sms.utils.Config.pin;
+    	var mask=new Ext.LoadMask(Ext.getBody(), {message:""});
+    	mask.show();
     	Ext.Ajax.request({
-    		scope:me,
     		url:url,
+    		scope:me,
+    		params:param,
+    		noCache: false,
+    		method:'POST',
     		success: function(response, request){
                 var account = Ext.decode(response.responseText).account;
                 var user=Ext.create('sms.model.User',{
-        			firstName:'Daniel',
+        			firstName:account.name,
         			minimumPayment:parseFloat(account.minimumPayment),
         			fullPayment:parseFloat(account.balance)
         		});
         		me.setPaymentLabels(user);
         		tabPanel.setActiveItem(1);
+        		mask.hide();
     		},
     		failure: function(response,request){
+    			mask.hide();
     			Ext.Msg.alert('Error','Invalid PIN. Please try again');
+    		},
+    		headers: {
+    			'Accept':'application/json',
+    			'Content-Type':'application/x-www-form-urlencoded'
     		}
     	
     	});
@@ -128,20 +138,30 @@ Ext.define('sms.controller.SMSController',{
     },
     
     sendPayment: function(amount){
-    	debugger;
-    	var url='/SMS/pay/[key]/authorize?pin=[pin]';
+    	var url='/SMS/pay/[key]/authorize';
     	url=url.replace('[key]',sms.utils.Config.endUserId);
-    	url=url.replace('[pin]',sms.utils.Config.pin);
     	var me=this;
+    	var param='pin='+sms.utils.Config.pin;
+
+    	var mask=new Ext.LoadMask(Ext.getBody(), {message:""});
+    	mask.show();
     	Ext.Ajax.request({
     		url:url,
     		scope:me,
+    		noCache: false,
+    		method:'POST',
+    		params:param,
     		success: function(response, request){
+    			mask.hide();
     			Ext.Msg.alert('Alert', 'Your payment request is being processed. Thank you');
     		},
     		failure: function(response,request){
-    			debugger;
+    			mask.hide();
     			me.showResponseError();
+    		},
+    		headers: {
+    			'Accept':'application/json',
+    			'Content-Type':'application/x-www-form-urlencoded'
     		}
     	
     	});
@@ -152,15 +172,27 @@ Ext.define('sms.controller.SMSController',{
     },
     
     agentCallback: function(){
-    	var url='';
-		
+    	var url='/SMS/response/CALLBACK/[key]';
+    	url=url.replace('[key]',sms.utils.Config.endUserId);
+    	var param='pin='+sms.utils.Config.pin;
+    	
+    	var mask=new Ext.LoadMask(Ext.getBody(), {message:""});
+    	mask.show();
     	Ext.Ajax.request({
     		url:url,
+    		method:'POST',
+    		params:param,
     		success: function(response, request){
     			Ext.Msg.alert('Alert','An agent will call you shortly');
+    			mask.hide();
     		},
     		failure: function(response,request){
     			Ext.Msg.alert('Error','We couldn\'t process your request. Please try again later');
+    			mask.hide();
+    		},
+    		headers: {
+    			'Accept':'application/json',
+    			'Content-Type':'application/x-www-form-urlencoded'
     		}
     	});
     },
