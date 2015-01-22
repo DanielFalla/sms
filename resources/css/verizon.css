@@ -48,7 +48,7 @@ h2{
 	font-size: 0.875em;
 }
 p{
-	font: normal 1rem/1.3125 Helvetica,Arial,sans-serif;
+	font: normal 0.85rem/1.1125 Helvetica,Arial,sans-serif;
 	margin-bottom: 0.9375rem;
 	text-rendering: optimizelegibility;
 }
@@ -79,7 +79,7 @@ hr {
 	height: 0px;
 }
 .fine-print{
-	font-size: 0.75em;
+	font-size: 0.50em;
 	line-height: 1.3;
 	color: #888;
 }
