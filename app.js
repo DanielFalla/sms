@@ -52,19 +52,25 @@ Ext.application({
     },
 
     launch: function() {
-    	if( Ext.os.is.Windows || Ext.os.is.Linux || Ext.os.is.MacOs ) { 
-    		this.loadCss( 'resources/css/app.css' );
+		sms.utils.Config.getUrlParameter('key');
+		if (sms.utils.Config.endUserId != undefined){
+			if( Ext.os.is.Windows || Ext.os.is.Linux || Ext.os.is.MacOs ) { 
+				this.loadCss( 'resources/css/app.css' );
+			}
+			var panel=Ext.create('sms.view.MainTabPanel');
+			panel.getTabBar().hide();
+			panel.setActiveItem(0);
+			var popanel=Ext.getCmp('paymentoptions');
+			popanel.paymentOptions=Ext.create('sms.model.PaymentOptions',{
+				payment:undefined,
+				otherAmount:undefined,
+			});
+			popanel.setRecord(popanel.paymentOptions);
+			Ext.Viewport.add(panel);
+		}else{
+			Ext.Viewport.add(Ext.widget('nokeypresent'));
 		}
-    	var panel=Ext.create('sms.view.MainTabPanel');
-    	panel.getTabBar().hide();
-    	panel.setActiveItem(0);
-    	var popanel=Ext.getCmp('paymentoptions');
-    	popanel.paymentOptions=Ext.create('sms.model.PaymentOptions',{
-    		payment:undefined,
-    		otherAmount:undefined,
-    	});
-    	popanel.setRecord(popanel.paymentOptions);
-        Ext.Viewport.add(panel);
+		
     },
 
     onUpdated: function() {

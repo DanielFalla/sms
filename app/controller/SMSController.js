@@ -10,26 +10,25 @@ Ext.define('sms.controller.SMSController',{
         }
     },
 	init: function(){
-		sms.utils.Config.getUrlParameter('id');
-		this.control({
-			'[name=validateAccountButton]':{
-    			tap:this.loadOptions
-    		},
-    		'[name=sendPaymentOptionButton]':{
-    			tap:this.sendPaymentOption
-    		},
-    		'[name=payment]':{
-    			check:this.emptyOtherAmountField
-    		},
-    		'[id=PIN]':{
-    			keyup:this.enterPIN,
-    			blur:this.blurPIN
-    		},
-    		'[id=otherAmount]':{
-    			focus:this.setCursor,
-    			keyup:this.enterOtherAmount
-    		},
-		});
+			this.control({
+				'[name=validateAccountButton]':{
+					tap:this.loadOptions
+				},
+				'[name=sendPaymentOptionButton]':{
+					tap:this.sendPaymentOption
+				},
+				'[name=payment]':{
+					check:this.emptyOtherAmountField
+				},
+				'[id=PIN]':{
+					keyup:this.enterPIN,
+					blur:this.blurPIN
+				},
+				'[id=otherAmount]':{
+					focus:this.setCursor,
+					keyup:this.enterOtherAmount
+				},
+			});
 	},
 	
 	blurPIN:function(e,eOpts){
@@ -78,25 +77,36 @@ Ext.define('sms.controller.SMSController',{
     },
     
     validateAccount: function(tabPanel){
-    	if (Ext.getCmp('PIN').getValue()=="123"){
-    		var user=Ext.create('sms.model.User',{
-    			firstName:'Daniel',
-    			lastName:'Falla',
-    			minimumPayment:2000.40,
-    			fullPayment:4000.00
-    		});
-    		this.setPaymentLabels(user);
-    		tabPanel.setActiveItem(1);
-    	}
-    	else{
-    		Ext.Msg.alert('Error','Invalid PIN. Please try again');
-    	}
+    	var url='/SMS/auth/[key]/{pin}?pin=[pin]';
+    	debugger;
+    	sms.utils.Config.pin=Ext.getCmp('PIN').getValue();
+    	url=url.replace('[key]',sms.utils.Config.endUserId);
+    	url=url.replace('[pin]',sms.utils.Config.pin);
+    	var me=this;
+    	Ext.Ajax.request({
+    		scope:me,
+    		url:url,
+    		success: function(response, request){
+                var account = Ext.decode(response.responseText).account;
+                var user=Ext.create('sms.model.User',{
+        			firstName:'Daniel',
+        			minimumPayment:parseFloat(account.minimumPayment),
+        			fullPayment:parseFloat(account.balance)
+        		});
+        		me.setPaymentLabels(user);
+        		tabPanel.setActiveItem(1);
+    		},
+    		failure: function(response,request){
+    			Ext.Msg.alert('Error','Invalid PIN. Please try again');
+    		}
+    	
+    	});
     },
     
     sendPaymentOption: function(){
     	var form=Ext.getCmp('paymentoptions');
     	form.updateRecord(form.paymentOptions, true);
-    	var v=form.paymentOptions.get("payment");
+    	var amount=form.paymentOptions.get("payment");
     	if (form.paymentOptions.get("payment")==null && form.paymentOptions.get("otherAmount")==null){
     		Ext.Msg.alert('Error', 'Please select an option');
     	}else if (form.paymentOptions.get("otherAmount")!=null){
@@ -106,12 +116,53 @@ Ext.define('sms.controller.SMSController',{
     			if (!(minPayment<=otherAmount && otherAmount<=fullPayment))
     				Ext.Msg.alert('Error', 'The amount specified must be between minimum and full payment amounts');
     			else
-    				Ext.Msg.alert('Alert', 'Your payment request is being processed. Thank you');
+    				this.sendPayment(otherAmount);
     	}else if(form.paymentOptions.get("payment")!='agent'){
-    		Ext.Msg.alert('Alert', 'Your payment request is being processed. Thank you');
+    		if (amount=='min')
+    			this.sendPayment(this.user.minimumAmount);
+    		if (amount=='full')
+    			this.sendPayment(this.user.balance);
     	}else{
-    		Ext.Msg.alert('Alert','An agent will call you shortly');
+    		this.agentCallback();
     	}
+    },
+    
+    sendPayment: function(amount){
+    	debugger;
+    	var url='/SMS/pay/[key]/authorize?pin=[pin]';
+    	url=url.replace('[key]',sms.utils.Config.endUserId);
+    	url=url.replace('[pin]',sms.utils.Config.pin);
+    	var me=this;
+    	Ext.Ajax.request({
+    		url:url,
+    		scope:me,
+    		success: function(response, request){
+    			Ext.Msg.alert('Alert', 'Your payment request is being processed. Thank you');
+    		},
+    		failure: function(response,request){
+    			debugger;
+    			me.showResponseError();
+    		}
+    	
+    	});
+    },
+    
+    showResponseError: function(){
+    	Ext.Msg.alert('Error','We couldn\'t process your request. Please try again later');
+    },
+    
+    agentCallback: function(){
+    	var url='';
+		
+    	Ext.Ajax.request({
+    		url:url,
+    		success: function(response, request){
+    			Ext.Msg.alert('Alert','An agent will call you shortly');
+    		},
+    		failure: function(response,request){
+    			Ext.Msg.alert('Error','We couldn\'t process your request. Please try again later');
+    		}
+    	});
     },
     
     emptyOtherAmountField: function( check, e, eOpts){

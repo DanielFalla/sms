@@ -6,6 +6,7 @@ Ext.define('sms.model.User', {
             { name: 'lastName',     type: 'string' },
             { name: 'minimumPayment', type: 'double' },
             { name: 'fullPayment', type: 'double' },
+            { name: 'pin', type: 'integer' },
         ]
     }
 });
