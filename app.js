@@ -70,6 +70,9 @@ Ext.application({
 			var errorPanel=Ext.create('sms.view.NoKeyPresent');
 			Ext.Viewport.add(errorPanel);
 		}
+		Ext.Msg.defaultAllowedConfig.autoDestroy = true;
+		Ext.Msg.defaultAllowedConfig.hideAnimation = undefined;
+		Ext.Msg.defaultAllowedConfig.showAnimation = undefined;
 		
     },
 

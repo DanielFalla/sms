@@ -10,25 +10,25 @@ Ext.define('sms.controller.SMSController',{
         }
     },
 	init: function(){
-			this.control({
-				'[name=validateAccountButton]':{
-					tap:this.loadOptions
-				},
-				'[name=sendPaymentOptionButton]':{
-					tap:this.sendPaymentOption
-				},
-				'[name=payment]':{
-					check:this.emptyOtherAmountField
-				},
-				'[id=PIN]':{
-					keyup:this.enterPIN,
-					blur:this.blurPIN
-				},
-				'[id=otherAmount]':{
-					focus:this.setCursor,
-					keyup:this.enterOtherAmount
-				},
-			});
+		this.control({
+			'[name=validateAccountButton]':{
+				tap:this.loadOptions
+			},
+			'[name=sendPaymentOptionButton]':{
+				tap:this.sendPaymentOption
+			},
+			'[name=payment]':{
+				check:this.emptyOtherAmountField
+			},
+			'[id=PIN]':{
+				keyup:this.enterPIN,
+				blur:this.blurPIN
+			},
+			'[id=otherAmount]':{
+				focus:this.setCursor,
+				keyup:this.enterOtherAmount
+			},
+		});
 	},
 	
 	blurPIN:function(e,eOpts){
@@ -102,8 +102,9 @@ Ext.define('sms.controller.SMSController',{
         		mask.hide();
     		},
     		failure: function(response,request){
+    			this.showResponseError();
+    			Ext.getCmp('PIN').setValue('');
     			mask.hide();
-    			Ext.Msg.alert('Error','Invalid PIN. Please try again');
     		},
     		headers: {
     			'Accept':'application/json',
@@ -118,13 +119,13 @@ Ext.define('sms.controller.SMSController',{
     	form.updateRecord(form.paymentOptions, true);
     	var amount=form.paymentOptions.get("payment");
     	if (form.paymentOptions.get("payment")==null && form.paymentOptions.get("otherAmount")==null){
-    		Ext.Msg.alert('Error', 'Please select an option');
+    		this.showResponseError('Please select an option');
     	}else if (form.paymentOptions.get("otherAmount")!=null){
     			var otherAmount=form.paymentOptions.get("otherAmount");
     			var minPayment=this.user.get('minimumPayment');
     			var fullPayment=this.user.get('fullPayment');
     			if (!(minPayment<=otherAmount && otherAmount<=fullPayment))
-    				Ext.Msg.alert('Error', 'The amount specified must be between minimum and full payment amounts');
+    				this.showResponseError('The amount specified must be between minimum and full payment amounts');
     			else
     				this.sendPayment(otherAmount);
     	}else if(form.paymentOptions.get("payment")!='agent'){
@@ -152,12 +153,12 @@ Ext.define('sms.controller.SMSController',{
     		method:'POST',
     		params:param,
     		success: function(response, request){
+    			this.showSuccessMessage('Your payment request is being processed. Thank you');
     			mask.hide();
-    			Ext.Msg.alert('Alert', 'Your payment request is being processed. Thank you');
     		},
     		failure: function(response,request){
+    			this.showResponseError();
     			mask.hide();
-    			me.showResponseError();
     		},
     		headers: {
     			'Accept':'application/json',
@@ -168,26 +169,44 @@ Ext.define('sms.controller.SMSController',{
     },
     
     showResponseError: function(){
-    	Ext.Msg.alert('Error','We couldn\'t process your request. Please try again later');
+    	Ext.create('Ext.MessageBox').show(
+    	        {
+    	            title: 'Error',
+    	            message: 'We couldn\'t process your request. Please try again later',
+    	            buttons: Ext.MessageBox.OK
+    	        }        
+    		);
+    },
+    
+    showSuccessMessage: function(msg){
+    	Ext.create('Ext.MessageBox').show(
+    	        {
+    	            title: 'Alert',
+    	            message: msg,
+    	            buttons: Ext.MessageBox.OK
+    	        }        
+    		);
     },
     
     agentCallback: function(){
     	var url='/SMS/response/CALLBACK/[key]';
     	url=url.replace('[key]',sms.utils.Config.endUserId);
     	var param='pin='+sms.utils.Config.pin;
-    	
+    	var me=this;
+
     	var mask=new Ext.LoadMask(Ext.getBody(), {message:""});
     	mask.show();
     	Ext.Ajax.request({
     		url:url,
+    		scope:me,
     		method:'POST',
     		params:param,
     		success: function(response, request){
-    			Ext.Msg.alert('Alert','An agent will call you shortly');
+    			this.showSuccessMessage('An agent will call you shortly');
     			mask.hide();
     		},
     		failure: function(response,request){
-    			Ext.Msg.alert('Error','We couldn\'t process your request. Please try again later');
+    			this.showResponseError();
     			mask.hide();
     		},
     		headers: {
