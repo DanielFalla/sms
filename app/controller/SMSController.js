@@ -82,8 +82,7 @@ Ext.define('sms.controller.SMSController',{
     	url=url.replace('[key]',sms.utils.Config.endUserId);
     	var me=this;
     	var param='pin='+sms.utils.Config.pin;
-    	var mask=new Ext.LoadMask(Ext.getBody(), {message:""});
-    	mask.show();
+    	Ext.getCmp('maintabpanel').setMasked(true);
     	Ext.Ajax.request({
     		url:url,
     		scope:me,
@@ -99,12 +98,12 @@ Ext.define('sms.controller.SMSController',{
         		});
         		me.setPaymentLabels(user);
         		tabPanel.setActiveItem(1);
-        		mask.hide();
+            	Ext.getCmp('maintabpanel').setMasked(false);
     		},
     		failure: function(response,request){
-    			this.showResponseError();
+    			this.showResponseError('Invalid PIN. Please try again');
     			Ext.getCmp('PIN').setValue('');
-    			mask.hide();
+    			Ext.getCmp('maintabpanel').setMasked(false);
     		},
     		headers: {
     			'Accept':'application/json',
@@ -144,8 +143,7 @@ Ext.define('sms.controller.SMSController',{
     	var me=this;
     	var param='pin='+sms.utils.Config.pin;
 
-    	var mask=new Ext.LoadMask(Ext.getBody(), {message:""});
-    	mask.show();
+    	Ext.getCmp('maintabpanel').setMasked(true);
     	Ext.Ajax.request({
     		url:url,
     		scope:me,
@@ -154,11 +152,11 @@ Ext.define('sms.controller.SMSController',{
     		params:param,
     		success: function(response, request){
     			this.showSuccessMessage('Your payment request is being processed. Thank you');
-    			mask.hide();
+    			Ext.getCmp('maintabpanel').setMasked(false);
     		},
     		failure: function(response,request){
-    			this.showResponseError();
-    			mask.hide();
+    			this.showResponseError('We couldn\'t process your request. Please try again later');
+    			Ext.getCmp('maintabpanel').setMasked(false);
     		},
     		headers: {
     			'Accept':'application/json',
@@ -168,11 +166,11 @@ Ext.define('sms.controller.SMSController',{
     	});
     },
     
-    showResponseError: function(){
+    showResponseError: function(msg){
     	Ext.create('Ext.MessageBox').show(
     	        {
     	            title: 'Error',
-    	            message: 'We couldn\'t process your request. Please try again later',
+    	            message: msg,
     	            buttons: Ext.MessageBox.OK
     	        }        
     		);
@@ -194,8 +192,7 @@ Ext.define('sms.controller.SMSController',{
     	var param='pin='+sms.utils.Config.pin;
     	var me=this;
 
-    	var mask=new Ext.LoadMask(Ext.getBody(), {message:""});
-    	mask.show();
+    	Ext.getCmp('maintabpanel').setMasked(true);
     	Ext.Ajax.request({
     		url:url,
     		scope:me,
@@ -203,11 +200,11 @@ Ext.define('sms.controller.SMSController',{
     		params:param,
     		success: function(response, request){
     			this.showSuccessMessage('An agent will call you shortly');
-    			mask.hide();
+    			Ext.getCmp('maintabpanel').setMasked(false);
     		},
     		failure: function(response,request){
-    			this.showResponseError();
-    			mask.hide();
+    			this.showResponseError('We couldn\'t process your request. Please try again later');
+    			Ext.getCmp('maintabpanel').setMasked(false);
     		},
     		headers: {
     			'Accept':'application/json',

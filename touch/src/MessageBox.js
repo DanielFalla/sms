@@ -443,9 +443,7 @@ Ext.define('Ext.MessageBox', {
                 config.input.dom.blur();
             }
         }
-        debugger;
 
-//        this.hide();
         this.destroy();
     },
 
