@@ -101,8 +101,13 @@ Ext.define('sms.controller.SMSController',{
             	Ext.getCmp('maintabpanel').setMasked(false);
     		},
     		failure: function(response,request){
-    			this.showResponseError('Invalid PIN. Please try again');
-    			Ext.getCmp('PIN').setValue('');
+    			if (response.status=="403"){
+    				this.showResponseError('Invalid PIN. Please try again');
+    				Ext.getCmp('PIN').setValue('');
+    			}
+    			else{
+    				this.showResponseError('We couldn\'t process your request. Please try again later');
+    			}
     			Ext.getCmp('maintabpanel').setMasked(false);
     		},
     		headers: {
