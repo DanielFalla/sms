@@ -36,7 +36,7 @@ Ext.define('sms.controller.SMSController',{
 	},
 	
 	enterPIN: function( e, eOpts){
-		if (eOpts.event.keyCode == 13)
+		if (eOpts.browserEvent.keyCode == 13)
 			this.loadOptions();
 	},
 	

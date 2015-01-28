@@ -1,15 +1,17 @@
 Ext.define('sms.view.Splash',{
-	requires:['sms.view.NumericPassword'],
+	requires:['sms.view.NumericPassword','Ext.Img'],
 	extend: 'Ext.Panel',
 	alias   : 'widget.splash',
 	id: 'splash',
 	config:{
 		fullscreen: true,
 		items:[{
-			docked:'top',
 			xtype: 'titlebar',
-			title: 'LV Mobile Payment',
-			layout:'vbox',
+			id:'titleBar',
+		},{
+			xtype: 'image',
+			id:'splashImage',
+			height:100
 		},{
 	    	items: [{
     	        xtype:'fieldset',

@@ -12,12 +12,10 @@ Ext.define('sms.view.PaymentOptionsPanel',{
 	paymentOptions:undefined,
 	config:{
 		fullscreen:true,
-		layout:'fit',
 		items:[{
-			docked:'top',
-			xtype: 'titlebar',
-			title: 'Payment Options',
-			layout:'vbox',
+			xtype: 'image',
+			id:'paymentImage',
+			height:100
 		},{
 			items:[{
 				xtype: 'fieldset',

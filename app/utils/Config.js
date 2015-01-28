@@ -2,6 +2,7 @@ Ext.define('sms.utils.Config',{
 	singleton:true,
 	endUserId: undefined,
 	pin:undefined,
+	images:'resources/images/',
 	getUrlParameter: function(keyname){
         var strdata = window.location.search;
 
@@ -18,4 +19,6 @@ Ext.define('sms.utils.Config',{
             }
         }
 	},
+	client:undefined,
+	clientLogo:undefined
 });

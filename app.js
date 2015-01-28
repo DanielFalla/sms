@@ -52,14 +52,36 @@ Ext.application({
     },
 
     launch: function() {
-		sms.utils.Config.getUrlParameter('key');
+    	var me=this;
+    	Ext.Ajax.request({
+    		async:true,
+        	scope:me,
+            url: 'resources/config/config.json',            
+            success: function (response, options) {
+            	sms.utils.Config.client = Ext.JSON.decode(response.responseText);
+            	sms.utils.Config.clientLogo =sms.utils.Config.images+sms.utils.Config.client.logo;
+            	var path = sms.utils.Config.clientLogo;
+            	
+            	this.finishLaunch(me);
+            }
+        });
+
+    },
+    
+    finishLaunch:function(me){
+    	document.title = sms.utils.Config.client.name;
+    	
+    	sms.utils.Config.getUrlParameter('key');
 		if( Ext.os.is.Windows || Ext.os.is.Linux || Ext.os.is.MacOs )
-			this.loadCss( 'resources/css/app.css' );
+			me.loadCss( 'resources/css/app.css' );
 		if (sms.utils.Config.endUserId != undefined){
 			var panel=Ext.create('sms.view.MainTabPanel');
 			panel.getTabBar().hide();
 			panel.setActiveItem(0);
 			var popanel=Ext.getCmp('paymentoptions');
+			Ext.getCmp('splashImage').setSrc(sms.utils.Config.clientLogo);
+			Ext.getCmp('titleBar').setTitle(sms.utils.Config.client.name);
+			Ext.getCmp('paymentImage').setSrc(sms.utils.Config.clientLogo);
 			popanel.paymentOptions=Ext.create('sms.model.PaymentOptions',{
 				payment:undefined,
 				otherAmount:undefined,
@@ -68,6 +90,8 @@ Ext.application({
 			Ext.Viewport.add(panel);
 		}else{
 			var errorPanel=Ext.create('sms.view.NoKeyPresent');
+			Ext.getCmp('errorTitleBar').setTitle(sms.utils.Config.client.name);
+			Ext.getCmp('errorImage').setSrc(sms.utils.Config.clientLogo);
 			Ext.Viewport.add(errorPanel);
 		}
 		Ext.Msg.defaultAllowedConfig.autoDestroy = true;

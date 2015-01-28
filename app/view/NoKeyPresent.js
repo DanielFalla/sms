@@ -5,12 +5,13 @@ Ext.define('sms.view.NoKeyPresent',{
 	requires:['Ext.Label'],
 	config:{
 		fullscreen: true,
-		layout:'fit',
 		items:[{
-			docked:'top',
 			xtype: 'titlebar',
-			title: 'LV Mobile Payment',
-			layout:'vbox',
+			id:'errorTitleBar',
+		},{
+			xtype: 'image',
+			id:'errorImage',
+			height:100
 		},{
 	    	items: [{
     	        xtype:'label',
